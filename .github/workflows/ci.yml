@@ -18,5 +18,4 @@ jobs:
         run: docker build --network=host -t cppapp .
 
       - name: Run tests
-        run: docker run --rm --network host cppapp ./build/main
-
+        run: docker run --rm --network host cppapp
