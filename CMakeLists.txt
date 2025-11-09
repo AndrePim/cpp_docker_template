@@ -4,11 +4,11 @@ project(CppDockerTemplate LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# include директория для заголовков
-target_include_directories(utils PUBLIC include)
-
-# Библиотека utils собирается только из cpp файлов
+# Сначала создаем библиотеку utils из исходников
 add_library(utils src/utils.cpp)
+
+# После того как target создан, подключаем include директорию
+target_include_directories(utils PUBLIC include)
 
 # Основной бинарник
 add_executable(app src/main.cpp)
