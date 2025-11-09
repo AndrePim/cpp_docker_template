@@ -1,0 +1,11 @@
+services:
+  cppapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host   # сборка через VPN
+    network_mode: host  # запуск через VPN
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ./build/main
