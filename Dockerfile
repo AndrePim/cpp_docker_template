@@ -3,7 +3,7 @@
 # ==========================
 FROM ubuntu:24.04 AS builder
 
-# Устанавливаем все инструменты для сборки
+# Устанавливаем инструменты сборки
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
@@ -19,10 +19,10 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Копируем весь проект
+# Копируем проект
 COPY . .
 
-# Собираем проект
+# Сборка проекта
 RUN mkdir -p build && cd build && cmake .. -G Ninja && ninja
 
 # ==========================
@@ -36,10 +36,11 @@ RUN apt-get update && \
         ca-certificates && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-# Копируем только бинарники из builder
+# Копируем бинарники и тесты
 COPY --from=builder /app/build /app/build
 
+# Указываем рабочую директорию сразу в build
+WORKDIR /app/build
+
 # Запуск по умолчанию
-CMD ["./build/main"]
+CMD ["./main"]
